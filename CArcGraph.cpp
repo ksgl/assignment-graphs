@@ -1,5 +1,19 @@
 #include "CArcGraph.hpp"
 
+int binomial_coefficient(int n, int k) {
+    int res = 1;
+
+    if (k > n - k) {
+        k = n - k;
+    }
+
+    for (int i = 0; i < k; ++i) {
+        res *= (n - i);
+        res /= (i + 1);
+    }
+
+    return res;
+}
 
 // get<0> -- from
 // get<1> -- to
@@ -7,7 +21,8 @@
 
 ArcGraph::ArcGraph(int count) : verticesCount(count) {
     if (verticesCount != 0) {
-        arcs.reserve(std::pow(verticesCount, verticesCount - 1)); // полагаем, что потенциально могут быть все пути из всех вершин, то есть V^E
+        arcs.reserve(binomial_coefficient(verticesCount, 2)); 
+        // полагаем, что потенциально могут быть все пути из всех вершин, то есть С^2_N
     }
 }
 
